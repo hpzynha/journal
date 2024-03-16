@@ -12,11 +12,27 @@ struct JournalEntriesListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort:\JournalEntry.date, order: .reverse) private var journalEntries: [JournalEntry]
     
+    @State private var searchText = ""
     @State var showCreateView = false
     
+    var filtredEntries: [JournalEntry] {
+        if searchText.isEmpty{
+            return journalEntries
+        } else{
+            return journalEntries.filter{$0.title.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
     var body: some View {
         NavigationStack{
-            List(journalEntries){ listedJournalEntry in
+            
+            TextField("Search", text: $searchText)
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+                .padding(.horizontal)
+            
+            List(filtredEntries){ listedJournalEntry in
                 NavigationLink(destination:
                                 EditJournalEntryView(editingJournalEntry: listedJournalEntry))
                 {
@@ -37,6 +53,7 @@ struct JournalEntriesListView: View {
         }
     }
 }
+
 #Preview {
     JournalEntriesListView()
         .modelContainer(for: JournalEntry.self, inMemory: true)
