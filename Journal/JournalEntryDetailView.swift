@@ -6,13 +6,34 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct JournalEntryDetailView: View {
+    
+    let detailJournalEntry: JournalEntry
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            VStack(alignment: .leading){
+                HStack{
+                    Text(detailJournalEntry.date, style: .date)
+                        .bold()
+                    Text("-")
+                    Text(String(repeating: "⭐️", count: Int(detailJournalEntry.rating)))
+                    Spacer()
+                }
+                .padding(.bottom)
+                
+                Text(detailJournalEntry.text)
+            }
+            .padding()
+            
+        }
+        .navigationTitle(detailJournalEntry.title)
     }
-}
-
-#Preview {
-    JournalEntryDetailView()
+    
+    #Preview {
+        JournalEntriesListView()
+            .modelContainer(for: JournalEntry.self, inMemory: true)
+    }
 }

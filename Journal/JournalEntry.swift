@@ -10,9 +10,15 @@ import SwiftData
 
 @Model
 final class JournalEntry {
-    var timestamp: Date
+    var title: String = ""
+    var text: String = ""
+    var rating: Double = 1
+    var date: Date = Date()
     
-    init(timestamp: Date) {
-        self.timestamp = timestamp
+    init(title: String, text: String, rating: Double, date: Date) {
+        self.title = title
+        self.text = text
+        self.rating = rating
+        self.date = date
     }
 }
