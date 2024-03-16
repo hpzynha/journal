@@ -26,12 +26,6 @@ struct JournalEntriesListView: View {
     var body: some View {
         NavigationStack{
             
-            TextField("Search", text: $searchText)
-                .padding()
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .padding(.horizontal)
-            
             List(filtredEntries){ listedJournalEntry in
                 NavigationLink(destination:
                                 EditJournalEntryView(editingJournalEntry: listedJournalEntry))
@@ -51,6 +45,7 @@ struct JournalEntriesListView: View {
                 CreateJournalEntryView()
             }
         }
+        .searchable(text: $searchText)
     }
 }
 
